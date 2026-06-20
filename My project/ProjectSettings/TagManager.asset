@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Table
+    uniqueID: 2125780735
+    locked: 0
+  - name: Decor
+    uniqueID: 1884765021
+    locked: 0
+  - name: Hand
+    uniqueID: 4289159323
+    locked: 0
+  - name: Vfx
+    uniqueID: 2937063959
+    locked: 0
