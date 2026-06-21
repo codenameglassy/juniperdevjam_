@@ -357,6 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 45703612}
   - component: {fileID: 45703613}
+  - component: {fileID: 45703614}
   m_Layer: 0
   m_Name: Circle (3)
   m_TagString: Untagged
@@ -373,8 +374,8 @@ Transform:
   m_GameObject: {fileID: 45703611}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0.23, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1276551020}
@@ -420,7 +421,7 @@ SpriteRenderer:
   m_SortingLayerID: 1566212725
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a0c86b4b58b7d8499d3ad2155ee8d51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -431,6 +432,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &45703614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45703611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbe1470a30d4a44095130a2d00e3cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: 3
+  _customOffset: {x: 0, y: 1}
+  _offsetDistance: 1
+  _popInDuration: 0.3
+  _popInEase: 27
+  _popOutDuration: 0.25
+  _popOutEase: 26
+  _fadeAlongside: 1
+  _fadeDuration: 0.15
 --- !u!1 &47915162
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +630,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: tether
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1276551021}
+        m_TargetAssemblyTypeName: SpinPuzzleParent, Assembly-CSharp
+        m_MethodName: PlaySpinPuzzlePopIns
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: tether
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 47915162}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -1154,6 +1188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 265172480}
   - component: {fileID: 265172481}
+  - component: {fileID: 265172482}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -1170,8 +1205,8 @@ Transform:
   m_GameObject: {fileID: 265172479}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.76, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -11.24, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1276551020}
@@ -1217,7 +1252,7 @@ SpriteRenderer:
   m_SortingLayerID: 1566212725
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a0c86b4b58b7d8499d3ad2155ee8d51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1228,6 +1263,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &265172482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265172479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbe1470a30d4a44095130a2d00e3cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: 3
+  _customOffset: {x: 0, y: 5}
+  _offsetDistance: 1
+  _popInDuration: 0.3
+  _popInEase: 27
+  _popOutDuration: 0.25
+  _popOutEase: 26
+  _fadeAlongside: 1
+  _fadeDuration: 0.15
 --- !u!1 &489609469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2246,8 +2302,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1276551020}
+  - component: {fileID: 1276551021}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Spin Puzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2262,7 +2319,7 @@ Transform:
   m_GameObject: {fileID: 1276551019}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.63, y: 1.12, z: 0}
+  m_LocalPosition: {x: 4.63, y: 1.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2272,6 +2329,24 @@ Transform:
   - {fileID: 45703612}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1276551021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276551019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d0e8a72d349864a9e428d2a0fb98d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupPositionEffect2Ds:
+  - {fileID: 265172482}
+  - {fileID: 2010841515}
+  - {fileID: 1930746208}
+  - {fileID: 45703614}
+  _delay: 1.2
 --- !u!1001 &1320697678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2616,6 +2691,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1930746206}
   - component: {fileID: 1930746207}
+  - component: {fileID: 1930746208}
   m_Layer: 0
   m_Name: Circle (2)
   m_TagString: Untagged
@@ -2632,8 +2708,8 @@ Transform:
   m_GameObject: {fileID: 1930746205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.8500001, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -3.72, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1276551020}
@@ -2679,7 +2755,7 @@ SpriteRenderer:
   m_SortingLayerID: 1566212725
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cc3ad17fda617274e93685ea21075092, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2690,6 +2766,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1930746208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930746205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbe1470a30d4a44095130a2d00e3cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: 3
+  _customOffset: {x: 0, y: 1}
+  _offsetDistance: 1
+  _popInDuration: 0.3
+  _popInEase: 27
+  _popOutDuration: 0.25
+  _popOutEase: 26
+  _fadeAlongside: 1
+  _fadeDuration: 0.15
 --- !u!1 &1970155406
 GameObject:
   m_ObjectHideFlags: 0
@@ -2784,6 +2881,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2010841513}
   - component: {fileID: 2010841514}
+  - component: {fileID: 2010841515}
   m_Layer: 0
   m_Name: Circle (1)
   m_TagString: Untagged
@@ -2800,8 +2898,8 @@ Transform:
   m_GameObject: {fileID: 2010841512}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.32, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -7.57, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1276551020}
@@ -2847,7 +2945,7 @@ SpriteRenderer:
   m_SortingLayerID: 1566212725
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a0c86b4b58b7d8499d3ad2155ee8d51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2858,6 +2956,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2010841515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010841512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbe1470a30d4a44095130a2d00e3cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _direction: 3
+  _customOffset: {x: 0, y: 1}
+  _offsetDistance: 1
+  _popInDuration: 0.3
+  _popInEase: 27
+  _popOutDuration: 0.25
+  _popOutEase: 26
+  _fadeAlongside: 1
+  _fadeDuration: 0.15
 --- !u!1 &2080286907
 GameObject:
   m_ObjectHideFlags: 0
