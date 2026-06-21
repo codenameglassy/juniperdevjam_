@@ -17,15 +17,15 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 8a5d9dc887c6ab445935624042cdb68a, type: 3}
     soundType: 0
-    volume: 1
+    volume: 0.45
     minPitch: 0.8
-    maxPitch: 1.2
+    maxPitch: 1.1
     loop: 0
   - soundName: tether
     clips:
     - {fileID: 8300000, guid: 41a70b47744dea445ac785ff406cbac7, type: 3}
     soundType: 0
-    volume: 1
+    volume: 0.6
     minPitch: 0.8
     maxPitch: 1.2
     loop: 0
