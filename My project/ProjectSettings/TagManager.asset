@@ -51,6 +51,9 @@ TagManager:
   - name: Box
     uniqueID: 745955471
     locked: 0
+  - name: Puzzle
+    uniqueID: 1566212725
+    locked: 0
   - name: Hand
     uniqueID: 4289159323
     locked: 0
