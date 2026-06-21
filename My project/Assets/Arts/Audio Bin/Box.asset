@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5895f27fee15cd246a3d4fd8f31434f6, type: 3}
+  m_Name: Box
+  m_EditorClassIdentifier: 
+  soundItems:
+  - soundName: cord
+    clips:
+    - {fileID: 8300000, guid: 8a5d9dc887c6ab445935624042cdb68a, type: 3}
+    soundType: 0
+    volume: 1
+    minPitch: 0.8
+    maxPitch: 1.2
+    loop: 0
+  - soundName: tether
+    clips:
+    - {fileID: 8300000, guid: 41a70b47744dea445ac785ff406cbac7, type: 3}
+    soundType: 0
+    volume: 1
+    minPitch: 0.8
+    maxPitch: 1.2
+    loop: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
-
+using UnityEngine.Events;
 public class Draggable2D : MonoBehaviour
 {
     [Header("Bounds (World Space)")]
@@ -34,6 +34,10 @@ public class Draggable2D : MonoBehaviour
 
     public bool IsDragging => isDragging;
 
+    [Header("Optional Events")]
+    public UnityEvent OnClicked;
+    public UnityEvent OnSucessfullDrop;
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -63,6 +67,9 @@ public class Draggable2D : MonoBehaviour
         Vector3 mouseWorldPos = GetMouseWorldPosition();
         dragOffset = transform.position - mouseWorldPos;
         isDragging = true;
+
+        OnClicked?.Invoke();
+
     }
 
     private void OnMouseDrag()
@@ -144,8 +151,10 @@ public class Draggable2D : MonoBehaviour
     protected virtual void OnSuccessfulDrop(Collider2D dropTarget)
     {
         Debug.Log($"{gameObject.name} dropped successfully on {dropTarget.gameObject.name}");
-        LevelObserver.Instance.NotifyOnBoxTethered();
-        gameObject.SetActive(false);
+
+        OnSucessfullDrop?.Invoke();
+        //LevelObserver.Instance.NotifyOnBoxTethered();
+        //gameObject.SetActive(false);
     }
 
     private void OnDestroy()
