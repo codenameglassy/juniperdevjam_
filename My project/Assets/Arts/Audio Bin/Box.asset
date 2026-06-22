@@ -29,3 +29,11 @@ MonoBehaviour:
     minPitch: 0.8
     maxPitch: 1.2
     loop: 0
+  - soundName: click
+    clips:
+    - {fileID: 8300000, guid: b6d1b4a1c8da01a4ea7972b477368d6b, type: 3}
+    soundType: 0
+    volume: 0.8
+    minPitch: 0.8
+    maxPitch: 1.2
+    loop: 0
