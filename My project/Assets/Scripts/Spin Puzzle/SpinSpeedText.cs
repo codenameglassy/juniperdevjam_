@@ -6,7 +6,6 @@ using TMPro;
 public class SpinSpeedText : MonoBehaviour
 {
     public TextMeshPro speedText;
-
     public SpinPuzzleBase spinPuzzle;
 
     private void Start()
@@ -19,7 +18,7 @@ public class SpinSpeedText : MonoBehaviour
         spinPuzzle.OnClicked -= ChangeSpeedText;
     }
 
-    void ChangeSpeedText(float newSpeed)
+    void ChangeSpeedText(int newSpeed)
     {
         speedText.text = newSpeed.ToString();
     }

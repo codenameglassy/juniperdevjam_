@@ -10,17 +10,21 @@ public class SpinPuzzleBase : MonoBehaviour
     [SerializeField] private float hoverScaleMultiplier = 1.1f;
     [SerializeField] private float hoverAnimDuration = 0.15f;
     [SerializeField] private Ease hoverEase = Ease.OutBack;
+
     private Tween scaleTween;
     private Vector3 baseScale;
     private Camera mainCamera;
 
+    public event Action<int> OnClicked;
 
-    public event Action <float> OnClicked;
-    public float currentSpinInt;
+    private int currentSpinInt = 0;
+    public int CurrentSpinInt => currentSpinInt;
+
+    private const int maxSpinValue = 4;
+
     private void Awake()
     {
         mainCamera = Camera.main;
-       
         baseScale = transform.localScale;
     }
 
@@ -32,44 +36,29 @@ public class SpinPuzzleBase : MonoBehaviour
 
     private void OnMouseExit()
     {
-        
-
         scaleTween?.Kill();
         scaleTween = transform.DOScale(baseScale, hoverAnimDuration).SetEase(hoverEase);
     }
 
     private void OnMouseDown()
     {
-        //Notify subscribers Onmousedown
         Debug.Log(gameObject.name + " clicked");
-        //change spin int
+        //sfx
+        SoundManager.Instance.PlayOneShot("click");
+
         SwitchCurrentSpinInt();
         OnClicked?.Invoke(currentSpinInt);
-
-       
-
     }
 
     void SwitchCurrentSpinInt()
     {
-        switch(currentSpinInt)
-        {
-            case 4:
-                currentSpinInt = 3;
-                break;
+        currentSpinInt = (currentSpinInt + 1) % (maxSpinValue + 1); // wraps 0->1->2->3->4->0
+    }
 
-            case 3:
-                currentSpinInt = 2;
-                break;
-
-            case 2:
-                currentSpinInt = 1;
-                break;
-
-            case 1:
-                currentSpinInt = 4;
-                break;
-
-        }
+    // Called by CodeLockManager to reset this dial on failure
+    public void ResetSpin()
+    {
+        currentSpinInt = 0;
+        OnClicked?.Invoke(currentSpinInt); // so UI/rotation visually reset too
     }
 }
