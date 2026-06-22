@@ -9,9 +9,22 @@ public class WheelRotation : MonoBehaviour
 
     private Tween rotationTween;
 
+    [SerializeField] private SpinPuzzleBase _spinPuzzleBase;
+
     private void OnEnable()
     {
-        StartSpin();
+        //StartSpin();
+    }
+
+    private void Start()
+    {
+        _spinPuzzleBase.OnClicked += SetSpeed;
+    }
+
+    private void OnDestroy()
+    {
+        _spinPuzzleBase.OnClicked -= SetSpeed;
+
     }
 
     private void OnDisable()
