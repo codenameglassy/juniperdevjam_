@@ -105,6 +105,8 @@ public class CodeLockManager : MonoBehaviour
         if (CheckCode())
         {
             Debug.Log("Code correct!");
+            //puzzle solve sfx
+            SoundManager.Instance.Play("solved");
             OnCodeCorrect?.Invoke();
         }
         else

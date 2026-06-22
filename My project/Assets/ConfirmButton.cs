@@ -6,6 +6,7 @@ using DG.Tweening;
 public class ConfirmButton : MonoBehaviour
 {
     public CodeLockManager codeLockManager;
+    public SpriteRenderer spriteRenderer;
 
     [Header("Hover Animation")]
     [SerializeField] private float hoverScaleMultiplier = 1.1f;
@@ -21,6 +22,10 @@ public class ConfirmButton : MonoBehaviour
     private Tween scaleTween;
     private Tween punchTween;
     private Vector3 baseScale;
+
+    [Header("Sprites")]
+    public Sprite pressed;
+    public Sprite unpressed;
 
     private void Awake()
     {
@@ -41,6 +46,9 @@ public class ConfirmButton : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //change sprite
+        spriteRenderer.sprite = pressed;
+
         PlayClickPop();
         codeLockManager.OnConfirmPressed();
     }

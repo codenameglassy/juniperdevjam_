@@ -78,6 +78,7 @@ public class SpinPuzzleBase : MonoBehaviour
             case true:
                 eyeBallClose.SetActive(false);
                 eyeBallOpen.SetActive(true);
+                SoundManager.Instance.PlayOneShot("correctcode");
                 break;
             case false:
                 eyeBallClose.SetActive(true);
