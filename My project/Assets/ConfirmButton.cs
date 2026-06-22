@@ -27,6 +27,10 @@ public class ConfirmButton : MonoBehaviour
     public Sprite pressed;
     public Sprite unpressed;
 
+    [Header("UI")]
+    public GameObject rewardPanel;
+    public List<GameObject> thingsToDisable = new List<GameObject>();
+
     private void Awake()
     {
         baseScale = transform.localScale;
@@ -51,6 +55,11 @@ public class ConfirmButton : MonoBehaviour
 
         PlayClickPop();
         codeLockManager.OnConfirmPressed();
+
+        for (int i = 0; i < thingsToDisable.Count; i++)
+        {
+            thingsToDisable[i].SetActive(false);
+        }
     }
 
     private void PlayClickPop()
@@ -61,6 +70,7 @@ public class ConfirmButton : MonoBehaviour
 
         transform.localScale = baseScale;
         punchTween = transform.DOPunchScale(Vector3.one * punchScaleAmount, punchDuration, punchVibrato, punchElasticity)
-            .OnComplete(() => transform.localScale = baseScale);
+            .OnComplete(() => 
+            transform.localScale = baseScale).OnComplete(() => rewardPanel.SetActive(true));
     }
 }
