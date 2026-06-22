@@ -1,0 +1,101 @@
+{
+"skeleton": {
+	"hash": "0W8XzlpINj2nBF+Wuns/jXBDJM8",
+	"spine": "3.8.33-beta",
+	"x": -227.56,
+	"y": -104.19,
+	"width": 439,
+	"height": 237,
+	"images": "../Eyeball/",
+	"audio": "C:/Users/user/Downloads/Eyeball"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "Iris", "parent": "root", "x": 397.26, "y": 9.52 },
+	{
+		"name": "Whiteball",
+		"parent": "root",
+		"length": 163.99,
+		"rotation": 90.41,
+		"x": 277.47,
+		"y": -55.61,
+		"scaleX": 0.85,
+		"color": "abe323ff"
+	}
+],
+"slots": [
+	{ "name": "Back", "bone": "root", "attachment": "Back" },
+	{ "name": "eyegum", "bone": "root", "attachment": "eyegum" },
+	{ "name": "Whiteball", "bone": "Whiteball", "attachment": "Whiteball" },
+	{ "name": "Iris", "bone": "Iris", "attachment": "Iris" },
+	{ "name": "upperlid", "bone": "root", "attachment": "upperlid" },
+	{ "name": "lowerlid", "bone": "root", "attachment": "lowerlid" }
+],
+"transform": [
+	{
+		"name": "eyecontrol",
+		"bones": [ "Iris" ],
+		"target": "Whiteball",
+		"rotation": -90.41,
+		"x": 68.91,
+		"y": -122.61,
+		"shearY": 360,
+		"rotateMix": 0,
+		"translateMix": 2,
+		"scaleMix": 0,
+		"shearMix": 0
+	}
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Back": {
+				"Back": { "x": -8.06, "y": 14.31, "width": 439, "height": 237 }
+			},
+			"Whiteball": {
+				"Whiteball": { "x": 73.21, "y": 283.19, "rotation": -90.41, "width": 288, "height": 205 }
+			},
+			"upperlid": {
+				"upperlid": { "x": -12.06, "y": 62.81, "width": 425, "height": 140 }
+			},
+			"lowerlid": {
+				"lowerlid": { "x": -8.06, "y": -38.19, "width": 439, "height": 132 }
+			},
+			"eyegum": {
+				"eyegum": { "x": -8.06, "y": 14.31, "scaleX": 0.9, "scaleY": 0.8, "width": 439, "height": 237 }
+			},
+			"Iris": {
+				"Iris": { "x": -408.32, "y": 13.42, "width": 151, "height": 143 }
+			}
+		}
+	}
+],
+"animations": {
+	"EyeBallRoll": {
+		"bones": {
+			"Whiteball": {
+				"translate": [
+					{ "x": 34.89, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6667, "x": -2.21, "y": 18.61, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "x": -3.49, "y": -11.63, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "x": -41.87, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.6667, "x": -2.21, "y": 18.61, "curve": 0.25, "c3": 0.75 },
+					{ "time": 3.3333, "x": -3.49, "y": -11.63, "curve": 0.25, "c3": 0.75 },
+					{ "time": 4, "x": 34.89 }
+				]
+			}
+		}
+	},
+	"Intro": {
+		"bones": {
+			"Whiteball": {
+				"translate": [
+					{ "y": 23.86, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1, "y": 2.51 }
+				]
+			}
+		}
+	}
+}
+}

@@ -1,0 +1,48 @@
+
+eyeball.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Back
+  rotate: false
+  xy: 2, 2
+  size: 439, 237
+  orig: 439, 237
+  offset: 0, 0
+  index: -1
+Iris
+  rotate: false
+  xy: 443, 2
+  size: 151, 143
+  orig: 151, 143
+  offset: 0, 0
+  index: -1
+Whiteball
+  rotate: false
+  xy: 884, 2
+  size: 288, 205
+  orig: 288, 205
+  offset: 0, 0
+  index: -1
+eyegum
+  rotate: false
+  xy: 1325, 2
+  size: 439, 237
+  orig: 439, 237
+  offset: 0, 0
+  index: -1
+lowerlid
+  rotate: false
+  xy: 2, 241
+  size: 439, 132
+  orig: 439, 132
+  offset: 0, 0
+  index: -1
+upperlid
+  rotate: false
+  xy: 443, 241
+  size: 425, 140
+  orig: 425, 140
+  offset: 0, 0
+  index: -1
