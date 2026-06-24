@@ -1,4 +1,3 @@
-
 public class GameStateManager 
 {
     private static GameStateManager _instance;

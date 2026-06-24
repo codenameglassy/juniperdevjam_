@@ -31,9 +31,9 @@ public class ConfirmButton : MonoBehaviour
 
     [Header("UI")]
     public GameObject rewardPanel;
-    public List<GameObject> thingsToDisable = new List<GameObject>();
+   
 
-    public UnityEvent OnGameEnd;
+  
 
     private void Awake()
     {
@@ -69,16 +69,6 @@ public class ConfirmButton : MonoBehaviour
 
         PlayClickPop();
         codeLockManager.OnConfirmPressed();
-
-        for (int i = 0; i < thingsToDisable.Count; i++)
-        {
-            thingsToDisable[i].SetActive(false);
-        }
-
-        //switch game state to gameover
-        GameStateManager.Instance.SetState(GameState.Gameover);
-
-        OnGameEnd?.Invoke();
     }
 
     private void PlayClickPop()

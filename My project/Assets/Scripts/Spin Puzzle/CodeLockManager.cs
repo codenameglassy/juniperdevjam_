@@ -9,65 +9,99 @@ public class CodeLockManager : MonoBehaviour
     [SerializeField] private CodeLockData codeLockData;
 
     [Header("Live Feedback")]
-    [Tooltip("Enabled when all dials are currently correct, disabled otherwise. Updates live as dials are clicked.")]
+    [Tooltip("Enabled when all active dials are currently correct. Updates live as dials are clicked.")]
     [SerializeField] private GameObject allCorrectIndicator;
 
     [Header("Events")]
     public System.Action OnCodeCorrect;
     public System.Action OnCodeIncorrect;
 
+    private int activeLevel = 1;
+    private int activeDialCount;
+
     private void Awake()
     {
-        ValidateSetup();
-        SyncTargetDigitsToDials();
+        if (codeLockData == null)
+            Debug.LogError($"{name}: no CodeLockData assigned.", this);
     }
 
-    private void OnEnable()
-    {
-        SubscribeToDials();
-    }
-
-    private void OnDisable()
-    {
-        UnsubscribeFromDials();
-    }
+    private void OnEnable() => SubscribeToDials();
+    private void OnDisable() => UnsubscribeFromDials();
 
     private void Start()
     {
+        // All Awakes have run by now, so LevelManager.Instance is set.
+        activeLevel = LevelManager.Instance != null ? LevelManager.Instance.CurrentLevel : 1;
+
+        if (LevelManager.Instance != null)
+            LevelManager.Instance.OnLevelChanged += HandleLevelChanged;
+
+        ValidateSetup();
+        LoadLevelCode();
         UpdateAllCorrectIndicator();
+    }
+
+    private void OnDestroy()
+    {
+        if (LevelManager.Instance != null)
+            LevelManager.Instance.OnLevelChanged -= HandleLevelChanged;
+    }
+
+    private void HandleLevelChanged(int newLevel)
+    {
+        activeLevel = newLevel;
+        LoadLevelCode();
+        ResetAllDials();
+        UpdateAllCorrectIndicator();
+    }
+
+    // Pushes the current level's code into the dials and enables only as many as the code needs.
+    private void LoadLevelCode()
+    {
+        if (codeLockData == null) return;
+
+        int[] code = codeLockData.GetCodeForLevel(activeLevel);
+        activeDialCount = code.Length;
+
+        if (activeDialCount > dials.Length)
+        {
+            Debug.LogError(
+                $"{name}: Level {activeLevel} code length ({activeDialCount}) exceeds available dials ({dials.Length}).", this);
+            activeDialCount = dials.Length;
+        }
+
+        for (int i = 0; i < dials.Length; i++)
+        {
+            if (dials[i] == null) continue;
+
+            bool participates = i < activeDialCount;
+            dials[i].SetParticipating(participates);
+
+            if (participates)
+                dials[i].SetTargetDigit(code[i]);
+        }
     }
 
     private void SubscribeToDials()
     {
         if (dials == null) return;
         foreach (var dial in dials)
-        {
-            if (dial != null)
-                dial.OnClicked += HandleDialClicked;
-        }
+            if (dial != null) dial.OnClicked += HandleDialClicked;
     }
 
     private void UnsubscribeFromDials()
     {
         if (dials == null) return;
         foreach (var dial in dials)
-        {
-            if (dial != null)
-                dial.OnClicked -= HandleDialClicked;
-        }
+            if (dial != null) dial.OnClicked -= HandleDialClicked;
     }
 
     // Fires on every dial click - keeps the live indicator in sync
-    private void HandleDialClicked(int _)
-    {
-        UpdateAllCorrectIndicator();
-    }
+    private void HandleDialClicked(int _) => UpdateAllCorrectIndicator();
 
     private void UpdateAllCorrectIndicator()
     {
-        if (allCorrectIndicator == null)
-            return;
-
+        if (allCorrectIndicator == null) return;
         allCorrectIndicator.SetActive(CheckCode());
     }
 
@@ -79,23 +113,12 @@ public class CodeLockManager : MonoBehaviour
             return;
         }
 
-        if (dials.Length != codeLockData.Length)
+        int needed = codeLockData.GetCodeForLevel(activeLevel).Length;
+        if (needed > dials.Length)
         {
             Debug.LogError(
-                $"{name}: dial count ({dials.Length}) doesn't match CodeLockData length ({codeLockData.Length}). " +
-                "Fix the dials array or the assigned CodeLockData asset.", this);
-        }
-    }
-
-    private void SyncTargetDigitsToDials()
-    {
-        if (codeLockData == null || dials.Length != codeLockData.Length)
-            return;
-
-        int[] correctCode = codeLockData.CorrectCode;
-        for (int i = 0; i < dials.Length; i++)
-        {
-            dials[i].SetTargetDigit(correctCode[i]);
+                $"{name}: Level {activeLevel} needs {needed} dials but only {dials.Length} are assigned. " +
+                "Add more dials or shorten the level code.", this);
         }
     }
 
@@ -108,6 +131,9 @@ public class CodeLockManager : MonoBehaviour
             //puzzle solve sfx
             SoundManager.Instance.Play("solved");
             OnCodeCorrect?.Invoke();
+
+            // To advance on solve, uncomment:
+            // LevelManager.Instance.NextLevel();
         }
         else
         {
@@ -119,23 +145,20 @@ public class CodeLockManager : MonoBehaviour
 
     private bool CheckCode()
     {
-        if (codeLockData == null || dials.Length != codeLockData.Length)
-            return false;
+        if (codeLockData == null) return false;
 
-        foreach (var dial in dials)
+        // Only the active dials (first activeDialCount) count toward the solution.
+        for (int i = 0; i < activeDialCount; i++)
         {
-            if (!dial.IsCorrect)
+            if (dials[i] == null || !dials[i].IsCorrect)
                 return false;
         }
-
         return true;
     }
 
     private void ResetAllDials()
     {
-        foreach (var dial in dials)
-        {
-            dial.ResetSpin();
-        }
+        for (int i = 0; i < dials.Length; i++)
+            if (dials[i] != null) dials[i].ResetSpin();
     }
 }

@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d55a6442726194e8b9e9df574dc24c, type: 3}
   m_Name: NewCodeLockData
   m_EditorClassIdentifier: 
-  correctCode: 02000000040000000200000004000000
+  levelCodes:
+  - code: 010000000200000003000000
+  - code: 01000000030000000000000002000000
+  - code: 04000000000000000400000001000000

@@ -53,3 +53,11 @@ MonoBehaviour:
     minPitch: 0.8
     maxPitch: 1.2
     loop: 0
+  - soundName: theme
+    clips:
+    - {fileID: 8300000, guid: 3af3fee592e4fef45aeb6306779f91a4, type: 3}
+    soundType: 1
+    volume: 0.65
+    minPitch: 1
+    maxPitch: 1
+    loop: 0
