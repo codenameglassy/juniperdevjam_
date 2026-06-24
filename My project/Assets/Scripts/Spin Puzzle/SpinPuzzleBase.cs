@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
 using System;
+using UnityEngine;
 public class SpinPuzzleBase : MonoBehaviour
 {
     [Header("Hover Animation")]
@@ -31,11 +29,30 @@ public class SpinPuzzleBase : MonoBehaviour
     [Header("Live-Feedback")]
     public GameObject eyeBallOpen;
     public GameObject eyeBallClose;
+
+    private BoxCollider2D boxCollider2d;
     private void Awake()
     {
         mainCamera = Camera.main;
         baseScale = transform.localScale;
+
+        GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
     }
+    private void Start()
+    {
+        boxCollider2d = GetComponent<BoxCollider2D>();
+    }
+
+    private void Update()
+    {
+
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
     private void OnMouseEnter()
     {
         scaleTween?.Kill();
@@ -96,5 +113,11 @@ public class SpinPuzzleBase : MonoBehaviour
     {
         currentSpinInt = 0;
         OnClicked?.Invoke(currentSpinInt);
+    }
+
+    private void OnGameStateChanged(GameState newGameState)
+    {
+        bool isactive = newGameState == GameState.Gameplay;
+        gameObject.SetActive(isactive);
     }
 }

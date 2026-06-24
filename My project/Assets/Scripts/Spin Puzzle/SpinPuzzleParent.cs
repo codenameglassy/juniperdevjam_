@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class SpinPuzzleParent : MonoBehaviour
 {
-    public List<PopupPositionEffect2D> popupPositionEffect2Ds = new List<PopupPositionEffect2D>();
-    [SerializeField] private float _delay;
-    public void PlaySpinPuzzlePopIns()
+    private void Awake()
     {
-        StartCoroutine(RoutinSpinPuzzlePopUp());
+        GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
+
     }
 
-    public IEnumerator RoutinSpinPuzzlePopUp()
+    private void OnDestroy()
     {
-        yield return new WaitForSeconds(_delay);
+        GameStateManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
 
-        for (int i = 0; i < popupPositionEffect2Ds.Count; i++)
-        {
-            popupPositionEffect2Ds[i].PlayIn();
-        }
+    private void OnGameStateChanged(GameState newGameState)
+    {
+        Debug.Log(newGameState.ToString());
+        bool isactive = newGameState == GameState.Gameplay;
+        gameObject.SetActive(isactive);
     }
 }

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class ConfirmButton : MonoBehaviour
 {
@@ -31,9 +33,21 @@ public class ConfirmButton : MonoBehaviour
     public GameObject rewardPanel;
     public List<GameObject> thingsToDisable = new List<GameObject>();
 
+    public UnityEvent OnGameEnd;
+
     private void Awake()
     {
         baseScale = transform.localScale;
+        GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
+    }
+    private void Start()
+    {
+
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.Instance.OnGameStateChanged -= OnGameStateChanged;
     }
 
     private void OnMouseEnter()
@@ -60,6 +74,11 @@ public class ConfirmButton : MonoBehaviour
         {
             thingsToDisable[i].SetActive(false);
         }
+
+        //switch game state to gameover
+        GameStateManager.Instance.SetState(GameState.Gameover);
+
+        OnGameEnd?.Invoke();
     }
 
     private void PlayClickPop()
@@ -72,5 +91,12 @@ public class ConfirmButton : MonoBehaviour
         punchTween = transform.DOPunchScale(Vector3.one * punchScaleAmount, punchDuration, punchVibrato, punchElasticity)
             .OnComplete(() => 
             transform.localScale = baseScale).OnComplete(() => rewardPanel.SetActive(true));
+    }
+
+    private void OnGameStateChanged(GameState newGameState)
+    {
+        bool isactive = newGameState == GameState.Gameplay;
+        gameObject.SetActive(isactive);
+       
     }
 }

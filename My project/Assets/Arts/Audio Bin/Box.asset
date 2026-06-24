@@ -39,11 +39,11 @@ MonoBehaviour:
     loop: 0
   - soundName: correctcode
     clips:
-    - {fileID: 8300000, guid: afbabb9b4e179ea46b89a1e5388cf0b1, type: 3}
+    - {fileID: 8300000, guid: 57031548de3d13b4e9d691e4da3fa3be, type: 3}
     soundType: 0
     volume: 0.8
     minPitch: 0.8
-    maxPitch: 1.2
+    maxPitch: 1.1
     loop: 0
   - soundName: solved
     clips:
