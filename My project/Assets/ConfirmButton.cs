@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.Events;
+using System;
 
 public class ConfirmButton : MonoBehaviour
 {
@@ -31,9 +32,6 @@ public class ConfirmButton : MonoBehaviour
 
     [Header("UI")]
     public GameObject rewardPanel;
-   
-
-  
 
     private void Awake()
     {
@@ -64,6 +62,8 @@ public class ConfirmButton : MonoBehaviour
 
     private void OnMouseDown()
     {
+        LevelObserver.Instance.NotifyConfirmButtonPressed();
+
         //change sprite
         spriteRenderer.sprite = pressed;
 

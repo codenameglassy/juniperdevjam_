@@ -103,6 +103,11 @@ public class CodeLockManager : MonoBehaviour
     {
         if (allCorrectIndicator == null) return;
         allCorrectIndicator.SetActive(CheckCode());
+
+        if(CheckCode())
+        {
+            LevelObserver.Instance.NotifyAllCorrectCode();
+        }
     }
 
     private void ValidateSetup()

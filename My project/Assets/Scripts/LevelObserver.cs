@@ -9,6 +9,9 @@ public class LevelObserver : MonoBehaviour
     public event Action OnBoxTethered;
     public event Action OnBoxUnTethered;
 
+    public event Action OnSpinPuzzleBaseTapped;
+    public event Action OnAllCorrectCode;
+    public event Action OnConfirmButtonPressed;
     private void Awake()
     {
         Instance = this;
@@ -23,14 +26,14 @@ public class LevelObserver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        /*if(Input.GetKeyDown(KeyCode.Space))
         {
             NotifyOnBoxTethered();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             NotifyOnBoxUnTethered();
-        }
+        }*/
     }
 
     public void NotifyOnBoxTethered()
@@ -43,5 +46,21 @@ public class LevelObserver : MonoBehaviour
     {
         OnBoxUnTethered?.Invoke();
         Debug.Log("Notify All OnBoxUnTethered Subscribers");
+    }
+
+
+    public void NotifySpinPuzzleBaseTapped()
+    {
+        OnSpinPuzzleBaseTapped?.Invoke();
+    }
+
+    public void NotifyAllCorrectCode()
+    {
+        OnAllCorrectCode?.Invoke();
+    }
+
+    public void NotifyConfirmButtonPressed()
+    {
+        OnConfirmButtonPressed?.Invoke();
     }
 }

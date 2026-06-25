@@ -40,4 +40,9 @@ public class LevelManager : MonoBehaviour
     public void NextLevel() => SetLevel(CurrentLevel + 1);
 
     public void ResetToFirstLevel() => SetLevel(firstLevel);
+
+    public bool IsFirstLevel()
+    {
+        return CurrentLevel == firstLevel;
+    }
 }

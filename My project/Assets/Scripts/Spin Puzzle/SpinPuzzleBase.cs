@@ -77,6 +77,8 @@ public class SpinPuzzleBase : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log(gameObject.name + " clicked");
+        //notify Level Observer
+        LevelObserver.Instance.NotifySpinPuzzleBaseTapped();
 
         //sfx
         SoundManager.Instance.PlayOneShot("click");
