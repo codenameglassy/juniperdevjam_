@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelRewards:
   - rewardText: Box Unlocked, You got a Jar of FireFlies.
-    rewardSprite: {fileID: 21300000, guid: 7ebae6b8d20c22d4286749fd1380e5fd, type: 3}
+    rewardSprite: {fileID: 21300000, guid: 670633090f3e81d45b758377281c6ad5, type: 3}
   - rewardText: Box Unlocked, You got a Propeller Hat.
     rewardSprite: {fileID: 21300000, guid: 8e7c6ccfc75ab3c4eb2df6505b6e85a3, type: 3}
   - rewardText: Box Unlocked, You got a Candy.
