@@ -4473,6 +4473,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa47b11a09b66b54fae40cb0600973d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level1_decorToDisable:
+  - {fileID: 536601977}
+  level2_decorToDisable: []
+  level3_decorToDisable: []
+  level4_decorToDisable: []
 --- !u!4 &865690243
 Transform:
   m_ObjectHideFlags: 0
@@ -5574,7 +5579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstLevel: 1
-  lastLevel: 3
+  lastLevel: 5
 --- !u!4 &1141560157
 Transform:
   m_ObjectHideFlags: 0
