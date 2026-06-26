@@ -1,0 +1,13 @@
+
+skeleton.png
+size: 256,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Tentacle
+  rotate: false
+  xy: 2, 2
+  size: 216, 816
+  orig: 216, 816
+  offset: 0, 0
+  index: -1

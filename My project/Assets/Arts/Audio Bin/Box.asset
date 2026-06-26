@@ -61,3 +61,11 @@ MonoBehaviour:
     minPitch: 1
     maxPitch: 1
     loop: 1
+  - soundName: throwobject
+    clips:
+    - {fileID: 8300000, guid: f5ca62a8f085b4a4b88d715b1564ff21, type: 3}
+    soundType: 0
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+    loop: 0

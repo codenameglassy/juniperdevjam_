@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,13 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent OnGameStart;
     public UnityEvent OnGameEnd;
+
+    [Header("Scene Names")]
+    [SerializeField] private string gameOverSceneName = "Gameover";
+
+    [Header("Canvas")]
+    [SerializeField] private CanvasGroup fadeCanvas;
+
     private void Awake()
     {
         Instance = this;
@@ -24,6 +32,9 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel()
     {
+        fadeCanvas.alpha = 1.0f;
+        fadeCanvas.DOFade(0, 3f);
+
         GameStateManager.Instance.SetState(GameState.Gameplay);
         SoundManager.Instance.Play("theme");
         OnGameStart?.Invoke();
@@ -48,8 +59,16 @@ public class GameManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        LevelManager.Instance.NextLevel();   // bump the persisted level FIRST
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // then reload
+        // Check BEFORE bumping — NextLevel() clamps, so after bumping you can't tell
+        // "was on last level" from "just moved to last level".
+        if (LevelManager.Instance.IsLastLevel)
+        {
+            SceneManager.LoadScene(gameOverSceneName);
+            return;
+        }
+
+        LevelManager.Instance.NextLevel();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 

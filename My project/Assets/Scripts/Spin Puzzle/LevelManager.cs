@@ -45,4 +45,6 @@ public class LevelManager : MonoBehaviour
     {
         return CurrentLevel == firstLevel;
     }
+
+    public bool IsLastLevel => CurrentLevel >= lastLevel;
 }
