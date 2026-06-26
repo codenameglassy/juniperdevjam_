@@ -20,4 +20,4 @@ MonoBehaviour:
   - rewardText: Box Unlocked, You got a Candy.
     rewardSprite: {fileID: 21300000, guid: c2a2750616127144aba15cd89a1ee08e, type: 3}
   - rewardText: Box Unlocked, You got a Corrupted Hand.
-    rewardSprite: {fileID: 21300000, guid: 626a1ab2146de3e41b745345fc2a964f, type: 3}
+    rewardSprite: {fileID: 21300000, guid: fd29004c2dd9cf049bdbaf7eb273ba58, type: 3}

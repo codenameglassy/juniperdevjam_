@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         GameStateManager.Instance.SetState(GameState.Gameover);
 
         //fadeout theme music
-        SoundManager.Instance.FadeOutStop("theme");
+        SoundManager.Instance.FadeOutStop("theme", 0.5f);
         
         OnGameEnd?.Invoke();
     }
