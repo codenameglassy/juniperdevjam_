@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Canvas")]
     [SerializeField] private CanvasGroup fadeCanvas;
+    [SerializeField] private float fadeDuration = 3f;
+    [SerializeField] private Ease fadeEase = Ease.InOutSine;
 
     private void Awake()
     {
@@ -32,13 +34,20 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel()
     {
-        fadeCanvas.alpha = 1.0f;
-        fadeCanvas.DOFade(0, 3f);
+        fadeCanvas.alpha = 1f;
+        fadeCanvas.blocksRaycasts = true; // can't click through while covered/fading
+
+        DOTween.Kill(fadeCanvas); // safety: no stacked tweens on re-entry
+        fadeCanvas.DOFade(0f, fadeDuration)
+            .SetEase(fadeEase)
+            .SetUpdate(true) // keeps fading even if timeScale gets changed elsewhere
+            .OnComplete(() => fadeCanvas.blocksRaycasts = false);
 
         GameStateManager.Instance.SetState(GameState.Gameplay);
         SoundManager.Instance.Play("theme");
         OnGameStart?.Invoke();
     }
+
 
     public void EndLevel()
     {

@@ -8,6 +8,7 @@ public class GameoverSequence : MonoBehaviour
 {
     public GameObject tentacleHand;
     public GameObject octoNerd;
+    public GameObject credits;
     private void Start()
     {
         SoundManager.Instance.Play("theme");
@@ -24,6 +25,8 @@ public class GameoverSequence : MonoBehaviour
         tentacleHand.SetActive(false);
         yield return new WaitForSeconds(.7f);
         octoNerd.transform.DOMove(new Vector3(0, 1.5f, 0), 3f);
+        yield return new WaitForSeconds(4.3f);
+        credits.SetActive(true);
 
     }
 }
