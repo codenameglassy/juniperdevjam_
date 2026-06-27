@@ -24,7 +24,8 @@ public class SpinPuzzleBase : MonoBehaviour
     private Vector3 baseScale;
     private Camera mainCamera;
 
-    public event Action<int> OnClicked;
+    public event Action<int> OnClicked;             // existing: passes the new value (SpinSpeedText uses this)
+    public event Action<SpinPuzzleBase> OnClickedDial; // NEW: passes identity (CodeLockManager sequence uses this)
 
     private int currentSpinInt = 0;
     public int CurrentSpinInt => currentSpinInt;
@@ -38,8 +39,8 @@ public class SpinPuzzleBase : MonoBehaviour
 
     private BoxCollider2D boxCollider2d;
 
-    // Remove the isGameplay field entirely. Keep isParticipating:
     private bool isParticipating = true;
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -89,11 +90,13 @@ public class SpinPuzzleBase : MonoBehaviour
         SwitchCurrentSpinInt();
         OnClicked?.Invoke(currentSpinInt);
         CheckSelf();
+
+        // Tell the manager WHICH dial was clicked (after value + visuals are updated).
+        OnClickedDial?.Invoke(this);
     }
 
     private void PlayClickPop()
     {
-        // Kill hover tween so it doesn't fight the punch over localScale
         scaleTween?.Kill();
         punchTween?.Kill();
         transform.localScale = baseScale;
@@ -123,37 +126,31 @@ public class SpinPuzzleBase : MonoBehaviour
         }
     }
 
-    // Called by CodeLockManager to set/sync this dial's target digit from the CodeLockData
     public void SetTargetDigit(int digit)
     {
         targetDigit = digit;
     }
 
-    // Called by CodeLockManager: whether this dial is part of the current level's code.
     public void SetParticipating(bool participating)
     {
         isParticipating = participating;
         ApplyActiveState();
     }
 
-    // Called by CodeLockManager to reset this dial on failure
     public void ResetSpin()
     {
         currentSpinInt = 0;
         OnClicked?.Invoke(currentSpinInt);
 
-        // Refresh eye visuals so a previously-correct dial doesn't keep its open eye.
         if (eyeBallOpen != null) eyeBallOpen.SetActive(false);
         if (eyeBallClose != null) eyeBallClose.SetActive(true);
     }
-
 
     private void OnGameStateChanged(GameState newGameState)
     {
         ApplyActiveState();
     }
 
-    // Active only if this dial is in the current code AND we're actually in gameplay.
     private void ApplyActiveState()
     {
         bool gameplay = GameStateManager.Instance != null

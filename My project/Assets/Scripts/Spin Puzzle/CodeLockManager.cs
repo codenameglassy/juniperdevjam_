@@ -15,9 +15,17 @@ public class CodeLockManager : MonoBehaviour
     [Header("Events")]
     public System.Action OnCodeCorrect;
     public System.Action OnCodeIncorrect;
+    // Fires with the 0-based index of the dial the player must click next (-1 when no sequence / solved).
+    // Wire a highlight to this so the player knows which dial is active.
+    public System.Action<int> OnSequenceActiveDialChanged;
 
     private int activeLevel = 1;
     private int activeDialCount;
+
+    // Sequence state (0-based dial indices). Empty/null solveOrder => any-order.
+    private int[] solveOrder;
+    private int sequenceProgress;
+    private bool useSequence;
 
     private void Awake()
     {
@@ -30,7 +38,6 @@ public class CodeLockManager : MonoBehaviour
 
     private void Start()
     {
-        // All Awakes have run by now, so LevelManager.Instance is set.
         activeLevel = LevelManager.Instance != null ? LevelManager.Instance.CurrentLevel : 1;
 
         if (LevelManager.Instance != null)
@@ -55,7 +62,6 @@ public class CodeLockManager : MonoBehaviour
         UpdateAllCorrectIndicator();
     }
 
-    // Pushes the current level's code into the dials and enables only as many as the code needs.
     private void LoadLevelCode()
     {
         if (codeLockData == null) return;
@@ -80,34 +86,121 @@ public class CodeLockManager : MonoBehaviour
             if (participates)
                 dials[i].SetTargetDigit(code[i]);
         }
+
+        LoadSequence();
+    }
+
+    // Reads + validates this level's solve order. Falls back to any-order on bad data.
+    private void LoadSequence()
+    {
+        sequenceProgress = 0;
+        useSequence = false;
+        solveOrder = null;
+
+        if (codeLockData == null) { RaiseActiveDialChanged(); return; }
+
+        int[] raw = codeLockData.GetSolveOrderForLevel(activeLevel); // 1-based
+        if (raw == null || raw.Length == 0) { RaiseActiveDialChanged(); return; }
+
+        if (raw.Length != activeDialCount)
+        {
+            Debug.LogError($"{name}: Level {activeLevel} solveOrder length ({raw.Length}) must equal " +
+                           $"active dial count ({activeDialCount}). Falling back to any-order.", this);
+            RaiseActiveDialChanged();
+            return;
+        }
+
+        int[] zeroBased = new int[raw.Length];
+        bool[] seen = new bool[activeDialCount];
+        for (int i = 0; i < raw.Length; i++)
+        {
+            int idx = raw[i] - 1; // 1-based -> 0-based
+            if (idx < 0 || idx >= activeDialCount || seen[idx])
+            {
+                Debug.LogError($"{name}: Level {activeLevel} solveOrder must be a permutation of 1..{activeDialCount}. " +
+                               $"Invalid/duplicate entry '{raw[i]}'. Falling back to any-order.", this);
+                RaiseActiveDialChanged();
+                return;
+            }
+            seen[idx] = true;
+            zeroBased[i] = idx;
+        }
+
+        solveOrder = zeroBased;
+        useSequence = true;
+        RaiseActiveDialChanged();
     }
 
     private void SubscribeToDials()
     {
         if (dials == null) return;
         foreach (var dial in dials)
-            if (dial != null) dial.OnClicked += HandleDialClicked;
+            if (dial != null) dial.OnClickedDial += HandleDialClicked;
     }
 
     private void UnsubscribeFromDials()
     {
         if (dials == null) return;
         foreach (var dial in dials)
-            if (dial != null) dial.OnClicked -= HandleDialClicked;
+            if (dial != null) dial.OnClickedDial -= HandleDialClicked;
     }
 
-    // Fires on every dial click - keeps the live indicator in sync
-    private void HandleDialClicked(int _) => UpdateAllCorrectIndicator();
+    // Fires on every dial click (identity-aware). Drives sequence enforcement + the live indicator.
+    private void HandleDialClicked(SpinPuzzleBase dial)
+    {
+        if (useSequence)
+            ProcessSequenceClick(dial);
+
+        UpdateAllCorrectIndicator();
+    }
+
+    private void ProcessSequenceClick(SpinPuzzleBase dial)
+    {
+        int clickedIndex = System.Array.IndexOf(dials, dial);
+        if (clickedIndex < 0 || clickedIndex >= activeDialCount)
+            return; // not a participating dial
+
+        if (sequenceProgress >= solveOrder.Length)
+            return; // sequence already complete
+
+        int expectedIndex = solveOrder[sequenceProgress];
+
+        if (clickedIndex != expectedIndex)
+        {
+            // Out-of-turn click -> reset the entire puzzle.
+            Debug.Log($"Out-of-sequence click on dial {clickedIndex + 1}; expected {expectedIndex + 1}. Resetting.");
+            SoundManager.Instance.PlayOneShot("error");
+            OnCodeIncorrect?.Invoke();
+            ResetAllDials();
+            return;
+        }
+
+        // Right dial, in turn. Advance only once it has reached its target digit.
+        if (dials[clickedIndex].IsCorrect)
+        {
+            sequenceProgress++;
+            RaiseActiveDialChanged();
+        }
+    }
+
+    // Broadcasts which dial is currently active in the sequence (-1 if none).
+    private void RaiseActiveDialChanged()
+    {
+        int idx = (useSequence && solveOrder != null && sequenceProgress < solveOrder.Length)
+                  ? solveOrder[sequenceProgress]
+                  : -1;
+        OnSequenceActiveDialChanged?.Invoke(idx);
+    }
 
     private void UpdateAllCorrectIndicator()
     {
         if (allCorrectIndicator == null) return;
-        allCorrectIndicator.SetActive(CheckCode());
 
-        if(CheckCode())
-        {
+        bool solved = CheckCode();
+        allCorrectIndicator.SetActive(solved);
+
+        if (solved)
             LevelObserver.Instance.NotifyAllCorrectCode();
-        }
     }
 
     private void ValidateSetup()
@@ -136,9 +229,6 @@ public class CodeLockManager : MonoBehaviour
             //puzzle solve sfx
             SoundManager.Instance.Play("solved");
             OnCodeCorrect?.Invoke();
-
-            // To advance on solve, uncomment:
-            // LevelManager.Instance.NextLevel();
         }
         else
         {
@@ -152,7 +242,10 @@ public class CodeLockManager : MonoBehaviour
     {
         if (codeLockData == null) return false;
 
-        // Only the active dials (first activeDialCount) count toward the solution.
+        // With a sequence, the puzzle isn't solved until the sequence is fully completed.
+        if (useSequence && (solveOrder == null || sequenceProgress < solveOrder.Length))
+            return false;
+
         for (int i = 0; i < activeDialCount; i++)
         {
             if (dials[i] == null || !dials[i].IsCorrect)
@@ -163,7 +256,10 @@ public class CodeLockManager : MonoBehaviour
 
     private void ResetAllDials()
     {
+        sequenceProgress = 0;
         for (int i = 0; i < dials.Length; i++)
             if (dials[i] != null) dials[i].ResetSpin();
+
+        RaiseActiveDialChanged();
     }
 }
