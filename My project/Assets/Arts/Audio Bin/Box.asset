@@ -69,3 +69,11 @@ MonoBehaviour:
     minPitch: 1
     maxPitch: 1
     loop: 0
+  - soundName: button
+    clips:
+    - {fileID: 8300000, guid: f06f4ba9147e82742ad906063878dafd, type: 3}
+    soundType: 0
+    volume: 0.6
+    minPitch: 0.8
+    maxPitch: 1.1
+    loop: 0

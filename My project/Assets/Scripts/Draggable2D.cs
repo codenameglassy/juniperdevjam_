@@ -63,6 +63,7 @@ public class Draggable2D : MonoBehaviour
 
     private void OnMouseDown()
     {
+        SoundManager.Instance.Play("cord");
         originalPosition = transform.position;
         Vector3 mouseWorldPos = GetMouseWorldPosition();
         dragOffset = transform.position - mouseWorldPos;
@@ -151,7 +152,7 @@ public class Draggable2D : MonoBehaviour
     protected virtual void OnSuccessfulDrop(Collider2D dropTarget)
     {
         Debug.Log($"{gameObject.name} dropped successfully on {dropTarget.gameObject.name}");
-
+        SoundManager.Instance.Play("tether");
         OnSucessfullDrop?.Invoke();
         //LevelObserver.Instance.NotifyOnBoxTethered();
         //gameObject.SetActive(false);

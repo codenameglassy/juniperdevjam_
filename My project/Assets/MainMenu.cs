@@ -10,22 +10,19 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SoundManager.Instance.Play("theme");
     }
 
     public void SetCreditsPanel(bool bool_)
     {
         creditsPanel.SetActive(bool_);
+        SoundManager.Instance.Play("button");
     }
 
     public void LoadGame()
     {
+        SoundManager.Instance.Play("button");
+
         SceneManager.LoadScene("SampleScene");
     }
 }
