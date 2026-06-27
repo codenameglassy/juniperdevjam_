@@ -81,7 +81,7 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: ad452b16921ab064a8308e58fb833a6f, type: 3}
     soundType: 0
-    volume: 0.75
+    volume: 0.55
     minPitch: 0.8
     maxPitch: 1.1
     loop: 0
